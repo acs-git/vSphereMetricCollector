@@ -42,28 +42,28 @@ Gather any available information or guidance on current policies around resource
 
 1.	Do you use any physical or logical compute separation or tiering for different workload categories?
 2.	If so, what levels of separation are currently in operation for this purpose?
-      1.Clusters
-      2. Hosts
-      3. Resource Pools
-      4. vApps
-      5. VM Reservations  
-3.	Label each method used with an overcommit ratio or policy currently in use.
-      1.CPU
-  	2.Memory
+            1.Clusters
+            2. Hosts
+            3. Resource Pools
+            4. vApps
+            5. VM Reservations  
+4.	Label each method used with an overcommit ratio or policy currently in use.
+            1.CPU
+  	      2.Memory
 5.	Do you have any known regularly occurring performance issues or bottlenecks for production workloads?
 6.	Any other relevant information regarding resource allocation please share it here.
 
 ## Dependencies and Constraints Questionnaire
 1.	In the estate to be migrated, do you have restrictive operating systems, or application licensing models in use that may affect cost at the destination environment?
-      1.	SQL
-      2.	Oracle
-      3.	Licensing Audits that require unrestricted access to hosts etc.
-      4.	Per available physical core licensing etc.
+            1.	SQL
+            2.	Oracle
+            3.	Licensing Audits that require unrestricted access to hosts etc.
+            4.	Per available physical core licensing etc.
 2.	Do you currently use any of the following
-      1.	RDMs
-      2.	Directly attached storage
-      3.	Shared disks (Quorum)
-      4.	Application Clustering (MSCS etc)
+            1.	RDMs
+            2.	Directly attached storage
+            3.	Shared disks (Quorum)
+            4.	Application Clustering (MSCS etc)
 3.	In the estate to be migrated, are there any applications or other dependencies on non-virtualised assets that cannot be converted?
 4.	Any other relevant information regarding resource constraints or dependencies please share here.
 
@@ -72,10 +72,10 @@ Gather information related to the network and security of the infrastructure in 
 
 1.	What technologies do you use for L3 routing (dynamic routing, etc.)
 2.	What technologies do you use for remote sites/users?
-      1.	IPSec site-to-site (Policy or routed)
-      2.	SSL VPN
-      3.	MPLS
-      4.	Other
+            1.	IPSec site-to-site (Policy or routed)
+            2.	SSL VPN
+            3.	MPLS
+            4.	Other
 3.	Are Load Balancers in use?
       1.	L4 or L7?
       2.	SSL Offloading?
