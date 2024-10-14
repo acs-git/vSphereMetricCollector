@@ -10,7 +10,7 @@ collect metrics as available in the vCenter. The variables on Table 1
 need to be changed to match the customer environment. Please enter values for the "$vcenter" and "$OutputDir" variables, examples are in the below table.
 
 You will be prompted for a username and password when the script is run. Other variables are configured with default settings and do not need to be changed unless explicitly instructed to do so. 
-![Table 1 ](![image](https://github.com/user-attachments/assets/35fd7e69-b063-4507-aa3c-b57de058a9a6)
+(![Table 1](https://github.com/user-attachments/assets/35fd7e69-b063-4507-aa3c-b57de058a9a6)
 
 ### Prerequisites 
 - The script has been developed and tested to run on Powershell\
