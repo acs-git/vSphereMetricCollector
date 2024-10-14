@@ -44,11 +44,7 @@ Gather any available information or guidance on current policies around resource
 
 1.	Do you use any physical or logical compute separation or tiering for different workload categories?
 2.	If so, what levels of separation are currently in operation for this purpose?
-   3.	Clusters   
-   2.	Hosts
-   3.	Resource Pools
-   4.	vApps
-   5.	VM Reservations
+   1.	Clusters   
 3.	Label each method used with an overcommit ratio or policy currently in use.
    1.	CPU
    2.	Memory
