@@ -57,8 +57,15 @@ Gather any available information or guidance on current policies around resource
 1. In the estate to be migrated, do you have restrictive operating systems, or application licensing models in use that may affect cost at the destination environment?
 2. Do you currently use any of the following?
       1. SQL
+      2. Oracle
+      3. Licensing Audits that require unrestricted access to hosts etc.
+      4. Per available physical core licensing etc.
 4. In the estate to be migrated, are there any applications or other dependencies on non-virtualised assets that cannot be converted?
-5. Any other relevant information regarding resource constraints or dependencies please share here.
+      1. RDMs
+      2. Directly attached storage
+      3. Shared disks (Quorum)
+      4. Application Clustering (MSCS, RAC etc)
+6. Any other relevant information regarding resource constraints or dependencies please share here.
 
 ## Network and Security Questionnaire
 Gather information related to the network and security of the infrastructure in scope.
