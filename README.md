@@ -42,11 +42,16 @@ Gather any available information or guidance on current policies around resource
 
 1. Do you use any physical or logical compute separation or tiering for different workload categories?
 2. If so, what levels of separation are currently in operation for this purpose?
+      1. Clusters
+      2. Hosts
+      3. Resource Pools
+      4. vApps
+      5. VM Reservations 
 3. Label each method used with an overcommit ratio or policy currently in use.
-                        1. CPU
-                        2.Memory
-5. Do you have any known regularly occurring performance issues or bottlenecks for production workloads?
-6. Any other relevant information regarding resource allocation please share it here.
+      1. CPU
+      2. Memory
+4. Do you have any known regularly occurring performance issues or bottlenecks for production workloads?
+5. Any other relevant information regarding resource allocation please share it here.
 
 ## Dependencies and Constraints Questionnaire
 1.In the estate to be migrated, do you have restrictive operating systems, or application licensing models in use that may affect cost at the destination environment?
@@ -67,10 +72,10 @@ Gather information related to the network and security of the infrastructure in 
 
 1.	What technologies do you use for L3 routing (dynamic routing, etc.)
 2.	What technologies do you use for remote sites/users?
-            1.	IPSec site-to-site (Policy or routed)
-            2.	SSL VPN
-            3.	MPLS
-            4.	Other
+    1. IPSec site-to-site (Policy or routed)
+    2. SSL VPN
+    3. MPLS
+    4. Other
 3.	Are Load Balancers in use?
       1.	L4 or L7?
       2.	SSL Offloading?
