@@ -56,7 +56,7 @@ Gather any available information or guidance on current policies around resource
 ## Dependencies and Constraints Questionnaire
 1. In the estate to be migrated, do you have restrictive operating systems, or application licensing models in use that may affect cost at the destination environment?
 2. Do you currently use any of the following?
-      3. SQL
+      1. SQL
 4. In the estate to be migrated, are there any applications or other dependencies on non-virtualised assets that cannot be converted?
 5. Any other relevant information regarding resource constraints or dependencies please share here.
 
