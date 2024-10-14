@@ -40,26 +40,21 @@ Please fill out and return the below information under the given headings. Pleas
 ## Resource Allocation and Overcommitment
 Gather any available information or guidance on current policies around resource overcommit or tiering. The purpose of this is to better equip ourselves when looking at any potential consolidation that may be possible in the cloud environment. If the information is not in hand we can work out current overcommits from the script output files.
 
-1.	Do you use any physical or logical compute separation or tiering for different workload categories?
-2.	If so, what levels of separation are currently in operation for this purpose?
-            1.Clusters
-            2. Hosts
-            3. Resource Pools
-            4. vApps
-            5. VM Reservations  
-4.	Label each method used with an overcommit ratio or policy currently in use.
-            1.CPU
-  	      2.Memory
-5.	Do you have any known regularly occurring performance issues or bottlenecks for production workloads?
-6.	Any other relevant information regarding resource allocation please share it here.
+1. Do you use any physical or logical compute separation or tiering for different workload categories?
+2. If so, what levels of separation are currently in operation for this purpose?
+3. Label each method used with an overcommit ratio or policy currently in use.
+                        1. CPU
+                        2.Memory
+5. Do you have any known regularly occurring performance issues or bottlenecks for production workloads?
+6. Any other relevant information regarding resource allocation please share it here.
 
 ## Dependencies and Constraints Questionnaire
-1.	In the estate to be migrated, do you have restrictive operating systems, or application licensing models in use that may affect cost at the destination environment?
+1.In the estate to be migrated, do you have restrictive operating systems, or application licensing models in use that may affect cost at the destination environment?
             1.	SQL
             2.	Oracle
             3.	Licensing Audits that require unrestricted access to hosts etc.
             4.	Per available physical core licensing etc.
-2.	Do you currently use any of the following
+2.Do you currently use any of the following
             1.	RDMs
             2.	Directly attached storage
             3.	Shared disks (Quorum)
