@@ -1,4 +1,4 @@
-# vSphereMetricCollector
+# vSphere Quick Assesment
 
 ## Metric Collection
 The aim of this script is to assess the customer's existing VMware
@@ -38,34 +38,68 @@ The script will also produce a csv file with a list of vms including the paramet
 Once complete please upload the outputted csv files as directed by Ascend Cloud Solutions.
 
 # Questionaire
-
 ## Resource Allocation and Overcommitment
 Gather any available information or guidance on current policies around resource overcommit or tiering. The purpose of this is to better equip ourselves when looking at any potential consolidation that may be possible in the cloud environment. If the information is not in hand we can work out current overcommits from the script output files.
 
 1.	Do you use any physical or logical compute separation or tiering for different workload categories?
 2.	If so, what levels of separation are currently in operation for this purpose?
-   1.	Clusters   
+      1.	Clusters
+      2. Hosts
+      3.	Resource Pools
+      4.	vApps
+      5.	VM Reservations  
 3.	Label each method used with an overcommit ratio or policy currently in use.
-   1.	CPU
-   2.	Memory
-4.	Do you have any known regularly occurring performance issues or bottlenecks for production workloads?
+      1.	CPU
+      2.	Memory
+4.	4.	Do you have any known regularly occurring performance issues or bottlenecks for production workloads?
 5.	Any other relevant information regarding resource allocation please share here.
-
 
 ## Dependencies and Constraints Questionnaire
 
-1.		In the estate to be migrated, do you have restrictive operating systems, or application licensing models in use that may affect cost at the destination environment?
-   a.	SQL
-   b.	Oracle
-   c.	Licensing Audits that require unrestricted access to hosts etc.
-   d.	Per available physical core licensing etc.
+1.	In the estate to be migrated, do you have restrictive operating systems, or application licensing models in use that may affect cost at the destination environment?
+      1.	SQL
+      2.	Oracle
+      3.	Licensing Audits that require unrestricted access to hosts etc.
+      4.	Per available physical core licensing etc.
 2.	Do you currently use any of the following
-   a.	RDMs
-   b.	Directly attached storage
-   c.	Shared disks (Quorum)
-   d.	Application Clustering (MSCS etc)
-3.		In the estate to be migrated, are there any applications or other dependencies on non-virtualised assets that cannot be converted?
-4.		Any other relevant information regarding resource constraints or dependencies please share here.
+      1.	RDMs
+      2.	Directly attached storage
+      3.	Shared disks (Quorum)
+      4.	Application Clustering (MSCS etc)
+3.	In the estate to be migrated, are there any applications or other dependencies on non-virtualised assets that cannot be converted?
+4.	Any other relevant information regarding resource constraints or dependencies please share here.
+
+## Network and Security Questionnaire
+Gather information related to the network and security of the infrastructure in scope.
+
+1.	What technologies do you use for L3 routing (dynamic routing, etc.)
+2.	What technologies do you use for remote sites/users?
+      1.	IPSec site-to-site (Policy or routed)
+      2.	SSL VPN
+      3.	MPLS
+      4.	Other
+3.	Are Load Balancers in use?
+      1.	L4 or L7?
+      2.	SSL Offloading?
+      3.	Any additional features?
+4.	Is WAN/OPT in use?
+      1.	L2 or L3?
+5.	What is being used for firewalling?
+6.	Is defense in depth being utilised?
+7.	Are there any WAFs deployed?
+8.	Are you using IDS/IPS?
+9.	What tools are being used for antivirus?
+      1.	Agent or agentless?
+10.	Do you utilise any CDN (Content Delivery Network)
+11.	Any additional service/feature that may be relevant?
+12.	If possible, please complete a table of Network and Security assets with a summary of purpose/features similar to Table 2.
+
+![Table 2 ](https://github.com/user-attachments/assets/8ae1d583-ce5f-42cc-b5b7-b78f24cf6416)
+
+Please return completed information to Ascend CLoud Solutions
+
+
+    
 
 
 
