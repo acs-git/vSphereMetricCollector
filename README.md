@@ -54,23 +54,16 @@ Gather any available information or guidance on current policies around resource
 5. Any other relevant information regarding resource allocation please share it here.
 
 ## Dependencies and Constraints Questionnaire
-1.In the estate to be migrated, do you have restrictive operating systems, or application licensing models in use that may affect cost at the destination environment?
-            1. SQL
-            2. Oracle
-            3. Licensing Audits that require unrestricted access to hosts etc.
-            4. Per available physical core licensing etc.
-2.Do you currently use any of the following
-            1. RDMs
-            2. Directly attached storage
-            3. Shared disks (Quorum)
-            4. Application Clustering (MSCS etc)
-3.	In the estate to be migrated, are there any applications or other dependencies on non-virtualised assets that cannot be converted?
-4.	Any other relevant information regarding resource constraints or dependencies please share here.
+1. In the estate to be migrated, do you have restrictive operating systems, or application licensing models in use that may affect cost at the destination environment?
+2. Do you currently use any of the following?
+      3. SQL
+4. In the estate to be migrated, are there any applications or other dependencies on non-virtualised assets that cannot be converted?
+5. Any other relevant information regarding resource constraints or dependencies please share here.
 
 ## Network and Security Questionnaire
 Gather information related to the network and security of the infrastructure in scope.
 
-1.	What technologies do you use for L3 routing (dynamic routing, etc.)
+1.	What technologies do you use for L3 routing (dynamic routing, etc.)? 
 2.	What technologies do you use for remote sites/users?
     1. IPSec site-to-site (Policy or routed)
     2. SSL VPN
@@ -88,7 +81,7 @@ Gather information related to the network and security of the infrastructure in 
 8.	Are you using IDS/IPS?
 9.	What tools are being used for antivirus?
       1.	Agent or agentless?
-10.	Do you utilise any CDN (Content Delivery Network)
+10.	Do you utilise any CDN (Content Delivery Network)?
 11.	Any additional service/feature that may be relevant?
 12.	If possible, please complete a table of Network and Security assets with a summary of purpose/features similar to the following table.
 
