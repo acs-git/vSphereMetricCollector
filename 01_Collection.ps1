@@ -1,13 +1,13 @@
 ## Variables ####
-$vcenter = ''
-$username = Read-Host "What is your username to login to $vcenter ?" #'administrator@vsphere.local'
-$pass = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($(Read-Host 'What is your password?' -AsSecureString)))| ConvertTo-SecureString -AsPlainText -Force
-$OutputDIR = 'C:\Some\Path\'+ $vcenter
-$metricLevel = 'L1' ## Options: L1 ,L2, L3
-$histLevel = 'H4' ## Options: H1, H2, H3, H4
-$maxFileSize = 30MB
-
-
+$inputValues = Get-Content -Path 'collection_input.json' | ConvertFrom-Json
+$vcenter = $inputValues.vcenter
+$username = $inputValues.username 
+$pass = ConvertTo-SecureString $inputValues.Password-ErrorAction Stop
+#$pass = ConvertTo-SecureString -String ($inputValues.pass) -AsPlainText -Force
+$OutputDIR = $inputValues.OutputDIR+'\VCenter-'+ $vcenter
+$metricLevel = $inputValues.metricLevel
+$histLevel = $inputValues.histLevel
+$maxFileSize = $inputValues.maxFileSize
 
 $statsLevel = @{
     "sys.uptime.latest" = 3;
@@ -115,14 +115,11 @@ Function Get-VMMetrics {
         }
         
         
-        Write-host "Getting stats for $vm... "
+        Write-host "Getting stats for $vm... " -ForegroundColor Yellow
         ##  get all vms from the connected vCenter
         $VMServer = Get-VM $VM
     
         if ($VMServer) {
-            write-host $VMServer
-            write-host $histint
-            write-host $stats
             ## if conditional bases on interval setting input by user. 
             ##As mentioned in loop it is cumulative. 
             ##Each higher setting collects the previous intervals also.
@@ -190,8 +187,10 @@ Function Get-VMMetrics {
 }
 
 ## connect vcenter and store credential data
+Write-host "Connecting to $vcenter with username $username" -ForegroundColor Yellow
 $credential = New-Object System.Management.Automation.PSCredential($username, $pass)
 $vc_conn = connect-viserver $vcenter -Credential $credential -ErrorAction Stop 
+if ($vc_conn){Write-Host "Connected to $vCenter" -ForegroundColor Green}
 
 ## retrieve list of vms
 $vms = get-vm -server $vc_conn 
@@ -199,7 +198,7 @@ $vms = get-vm -server $vc_conn
 ## get metrics for each vm and saves it to CSV
 #$counter = 1
 #$filename = $OutputDIR+'\vms_'+ $histLevel+'_'+$metricLevel+'_'+$counter+'.csv'
-write-host "collecting metrics with MetricLevel: $metricLevel and Histstat: $histLevel "
+write-host "collecting metrics with MetricLevel: $metricLevel and Histstat: $histLevel " -ForegroundColor Yellow
 foreach($vm in $vms){
         $filename = $OutputDIR+'\vm_'+$($vm.name)+ '_'+ $histLevel+'_'+$metricLevel+'.csv'  
         ## run the Get-VMMetrics function 
@@ -208,11 +207,12 @@ foreach($vm in $vms){
           if((get-item $filename).Length -gt $maxFileSize){
             $counter += 1  
             $filename = $OutputDIR+'\vms_'+ $histLevel+'_'+$metricLevel+'_'+$counter+'.csv'
-            write-host "creating to file $filename"
+            write-host "creating to file $filename" -ForegroundColor Green
           }
 }
 
 ## Filter for required VM data and export as CSV to output diirectory
+$date = Get-Date
 $params = @('name',
             'NumCpu',
             'MemoryGB',
@@ -220,12 +220,29 @@ $params = @('name',
             'Folder',
             'ResourcePool',
             'HardwareVersion',
-            'UsedSpaceGB',
-            'ProvisionedSpaceGB',
+            @{n='Disks'; e={($_ | Get-HardDisk).count}},
+            @{n='UsedSpaceGB'; e={[math]::Round($_.UsedSpaceGB,1)}},
+            @{n='ProvisionedSpaceGB'; e={[math]::Round($_.ProvisionedSpaceGB,1)}},
             'CreateDate',
+            'PowerState',
+            @{n='Guest OS'; e={$_.Guest.OSFullName}},
+            @{n='Portgroup'; e={($_ | Get-VirtualPortGroup).Name}},
+            @{n='Portgroup vlan'; e={($_ | Get-VirtualPortGroup).VLanId}},
+            @{n='Primary IP'; e={$_.Guest.IPAddress[0]}},
+            @{n='Uptime Days'; e={[math]::round(($date - $_.ExtensionData.Runtime.BootTime).TotalDays,1)}},
+            @{n='ESXi Host'; e={$_.VMHost.name}},
+            @{n='Cluster'; e={($_.VMHost.parent.name -replace '[][]', '')}},
             @{n='moref'; e={$_.extensionData.moref.value}}
             )
 
-            ## export vm data to csv
+
+## export vm data to csv
+write-host "Exporting VM Data to CSV" -ForegroundColor Yellow
 $vms | select $params | Export-Csv -Path "$OutputDIR\listVMs.csv" -NoTypeInformation
+write-host "VM Data Exported to $OutputDIR\listVMs.csv" -ForegroundColor Green
+
+write-host "Exporting Host Data to CSV" -ForegroundColor Yellow
+write-host "VM Data Exported to $OutputDIR\HostInfo.csv" -ForegroundColor Green
+
+Exit
 
