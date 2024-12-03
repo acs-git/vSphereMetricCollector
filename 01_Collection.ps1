@@ -260,13 +260,8 @@ $hostParams = @('Name',
                 @{n='Current EVC'; e={($_.ExtensionData.Summary.CurrentEVCModeKey)}},
                 @{n='Cluster'; e={($_.parent.name -replace '[][]', '')}}
                 @{n='Datastores'; e={((($_ | Get-Datastore).Name | sort -Unique) -join ' || ') }},
-                #@{n='Datastores 2'; e={(($_ | Get-Datastore).datastores.name | sort -Unique) -join ' | '}}
-                @{n='Portgroups'; e={(Get-VirtualPortGroup -VMhost $_).Name}}
+                @{n='Portgroups'; e={(((Get-VirtualPortGroup -VMhost $_).Name | sort -Unique) -join ' || ')}}
             )
-
-$tesParams =   @(
-                @{n='CPU Speed'; e={[math]::round($_.ExtensionData.Hardware.cpuinfo.HZ / 1000000000,2)}}
-                )
 
 ## export vm data to csv
 write-host "Exporting VM Data to CSV" -ForegroundColor Yellow
@@ -274,7 +269,7 @@ $vms | select $vmParams | Export-Csv -Path "$OutputDIR\listVMs.csv" -NoTypeInfor
 write-host "VM Data Exported to $OutputDIR\listVMs.csv" -ForegroundColor Green
 
 write-host "Exporting Host Data to CSV" -ForegroundColor Yellow
-$hosts | select $hostParams #| Export-Csv -Path "$OutputDIR\listHosts.csv" -NoTypeInformation
+$hosts | select $hostParams | Export-Csv -Path "$OutputDIR\listHosts.csv" -NoTypeInformation
 write-host "VM Data Exported to $OutputDIR\HostInfo.csv" -ForegroundColor Green
 
 Exit
