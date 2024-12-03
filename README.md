@@ -105,7 +105,17 @@ The script creates a directory named `VCenter-[vcenter_name]` containing:
    - Resource pool assignment
    - Storage utilization
 
-2. `vm_[name]_[histLevel]_[metricLevel].csv`: Performance metrics
+2. `listHosts.csv`: ESXi host inventory data
+   - Hardware specifications
+   - CPU and memory resources
+   - Network configuration
+   - Connected storage details
+   - Version information
+   - Maintenance status
+   - Cluster assignment
+   - Overall health status
+
+3. `vm_[name]_[histLevel]_[metricLevel].csv`: Performance metrics
    - Timestamps
    - Metric values
    - Collection intervals

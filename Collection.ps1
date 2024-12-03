@@ -263,11 +263,12 @@ $hostParams = @('Name',
                 @{n='Portgroups'; e={(((Get-VirtualPortGroup -VMhost $_).Name | sort -Unique) -join ' || ')}}
             )
 
-## export vm data to csv
+## export vm data to csv called ListVMs
 write-host "Exporting VM Data to CSV" -ForegroundColor Yellow
 $vms | select $vmParams | Export-Csv -Path "$OutputDIR\listVMs.csv" -NoTypeInformation
 write-host "VM Data Exported to $OutputDIR\listVMs.csv" -ForegroundColor Green
 
+## export Host data to csv called ListHosts
 write-host "Exporting Host Data to CSV" -ForegroundColor Yellow
 $hosts | select $hostParams | Export-Csv -Path "$OutputDIR\listHosts.csv" -NoTypeInformation
 write-host "VM Data Exported to $OutputDIR\HostInfo.csv" -ForegroundColor Green
