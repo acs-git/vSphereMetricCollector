@@ -180,7 +180,7 @@ Do you want to save these settings?
         $form.Close()
 
          # Notify the user it is attempting to collect metrics form choosen vCenter
-         write-host "Attempting to collect metrics from chosen vCenter" -ForegroundColor Green
+         write-host "Attempting to collect metrics from chosen $inputValues.v" -ForegroundColor Green
         # Run the collection script and wait for it to complete
         Start-Process powershell -ArgumentList "-File `"$PSScriptRoot\01_Collection.ps1`"" -NoNewWindow -Wait
     } else {

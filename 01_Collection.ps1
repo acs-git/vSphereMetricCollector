@@ -193,27 +193,28 @@ $vc_conn = connect-viserver $vcenter -Credential $credential -ErrorAction Stop
 if ($vc_conn){Write-Host "Connected to $vCenter" -ForegroundColor Green}
 
 ## retrieve list of vms
-$vms = get-vm -server $vc_conn 
+$vms = get-vm -server $vc_conn |?{$_.Name -notlike "vCLS*"}
+$hosts = Get-VMHost -server $vc_conn
 
 ## get metrics for each vm and saves it to CSV
 #$counter = 1
 #$filename = $OutputDIR+'\vms_'+ $histLevel+'_'+$metricLevel+'_'+$counter+'.csv'
 write-host "collecting metrics with MetricLevel: $metricLevel and Histstat: $histLevel " -ForegroundColor Yellow
 foreach($vm in $vms){
-        $filename = $OutputDIR+'\vm_'+$($vm.name)+ '_'+ $histLevel+'_'+$metricLevel+'.csv'  
-        ## run the Get-VMMetrics function 
-        Get-VMMetrics -VM $($vm.name) -MetricLevel $metricLevel -histLevel $histLevel | Export-Csv -Path $filename -NoTypeInformation -Append
-        ## control to regulate individual file size
-          if((get-item $filename).Length -gt $maxFileSize){
-            $counter += 1  
-            $filename = $OutputDIR+'\vms_'+ $histLevel+'_'+$metricLevel+'_'+$counter+'.csv'
-            write-host "creating to file $filename" -ForegroundColor Green
-          }
+    $filename = $OutputDIR+'\vm_'+$($vm.name)+ '_'+ $histLevel+'_'+$metricLevel+'.csv'  
+    ## run the Get-VMMetrics function 
+    Get-VMMetrics -VM $($vm.name) -MetricLevel $metricLevel -histLevel $histLevel | Export-Csv -Path $filename -NoTypeInformation -Append
+    ## control to regulate individual file size
+        if((get-item $filename).Length -gt $maxFileSize){
+        $counter += 1  
+        $filename = $OutputDIR+'\vms_'+ $histLevel+'_'+$metricLevel+'_'+$counter+'.csv'
+        write-host "creating to file $filename" -ForegroundColor Green
+        }
 }
 
 ## Filter for required VM data and export as CSV to output diirectory
 $date = Get-Date
-$params = @('name',
+$vmParams = @('name',
             'NumCpu',
             'MemoryGB',
             'VMHost',
@@ -225,9 +226,12 @@ $params = @('name',
             @{n='ProvisionedSpaceGB'; e={[math]::Round($_.ProvisionedSpaceGB,1)}},
             'CreateDate',
             'PowerState',
-            @{n='Guest OS'; e={$_.Guest.OSFullName}},
+            @{n='Guest Family'; e={$_.Guest.OSFullName}},
+            @{n='Guest OS'; e={$_.ExtensionData.Guest.GuestFamily}},
+            @{n='Tools Status'; e={($_.ExtensionData.Guest.ToolsStatus)}},
+            @{n='Guest State'; e={($_.Guest.State)}},
             @{n='Portgroup'; e={($_ | Get-VirtualPortGroup).Name}},
-            @{n='Portgroup vlan'; e={($_ | Get-VirtualPortGroup).VLanId}},
+            @{n='PG vlan ID'; e={($_ | Get-VirtualPortGroup).VLanId}},
             @{n='Primary IP'; e={$_.Guest.IPAddress[0]}},
             @{n='Uptime Days'; e={[math]::round(($date - $_.ExtensionData.Runtime.BootTime).TotalDays,1)}},
             @{n='ESXi Host'; e={$_.VMHost.name}},
@@ -235,13 +239,42 @@ $params = @('name',
             @{n='moref'; e={$_.extensionData.moref.value}}
             )
 
+$hostParams = @('Name',
+                'Version'
+                @{n='HostID'; e={($_.ID -replace 'HostSystem-', '')}},
+                'Manufacturer',
+                'Model',
+                'ProcessorType'
+                #@{n=''; e={($_.)}},
+                @{n='CPU Sockets'; e={($_.ExtensionData.Hardware.cpuinfo.NumCpuPackages)}},
+                @{n='CPU Cores'; e={($_.ExtensionData.Hardware.cpuinfo.NumCpuCores)}},
+                @{n='CPU Threads'; e={($_.ExtensionData.Hardware.cpuinfo.NumCpuThreads)}},
+                @{n='CPU Speed GHz'; e={[math]::round($_.ExtensionData.Hardware.cpuinfo.HZ / 1000000000,2)}},
+                @{n='CPU Cycles GHz'; e={[math]::round($_.CPUTotalMhz / 1000,2)}},
+                @{n='CPU Usage GHz'; e={[math]::round($_.CpuUsageMhz / 1000,2)}},
+                @{n='Memory GB'; e={[math]::round($_.MemoryTotalGB)}},
+                @{n='Memory Usage GB'; e={[math]::round($_.MemoryUsageGB)}},
+                @{n='Hyperthreading'; e={($_.HyperthreadingActive)}},
+                @{n='MAX EVC'; e={($_.MaxEVCMode)}},
+                @{n='VM Count'; e={($_.ExtensionData.Vm.Count)}},
+                @{n='Current EVC'; e={($_.ExtensionData.Summary.CurrentEVCModeKey)}},
+                @{n='Cluster'; e={($_.parent.name -replace '[][]', '')}}
+                @{n='Datastores'; e={((($_ | Get-Datastore).Name | sort -Unique) -join ' || ') }},
+                #@{n='Datastores 2'; e={(($_ | Get-Datastore).datastores.name | sort -Unique) -join ' | '}}
+                @{n='Portgroups'; e={(Get-VirtualPortGroup -VMhost $_).Name}}
+            )
+
+$tesParams =   @(
+                @{n='CPU Speed'; e={[math]::round($_.ExtensionData.Hardware.cpuinfo.HZ / 1000000000,2)}}
+                )
 
 ## export vm data to csv
 write-host "Exporting VM Data to CSV" -ForegroundColor Yellow
-$vms | select $params | Export-Csv -Path "$OutputDIR\listVMs.csv" -NoTypeInformation
+$vms | select $vmParams | Export-Csv -Path "$OutputDIR\listVMs.csv" -NoTypeInformation
 write-host "VM Data Exported to $OutputDIR\listVMs.csv" -ForegroundColor Green
 
 write-host "Exporting Host Data to CSV" -ForegroundColor Yellow
+$hosts | select $hostParams #| Export-Csv -Path "$OutputDIR\listHosts.csv" -NoTypeInformation
 write-host "VM Data Exported to $OutputDIR\HostInfo.csv" -ForegroundColor Green
 
 Exit
