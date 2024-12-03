@@ -1,0 +1,2 @@
+# Ignore collection input file containing sensitive information
+collection_input.json

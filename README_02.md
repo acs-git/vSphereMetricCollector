@@ -34,12 +34,6 @@ A PowerShell-based tool for collecting performance metrics from VMware vCenter e
 2. Enter your vCenter details and collection preferences
 3. Click Save to begin collection
 
-Alternatively, you can run the collection script directly:
-1. Download `01_Collection.ps1`
-2. Configure variables in the script
-3. Run `.\01_Collection.ps1` from PowerShell
-4. Enter credentials when prompted
-
 ## Input Parameters
 
 ### Required Fields
