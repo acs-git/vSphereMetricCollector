@@ -1,6 +1,29 @@
 # VMware Metrics Collection Tool
 
-A PowerShell-based tool for collecting performance metrics from VMware vCenter environments.
+A PowerShell-based tool for collecting performance metrics from VMware vCenter environments to assess for potential optimization opportunities.
+
+## Prerequisites
+
+### System Requirements
+- PowerShell 5.1 or later
+  - *While the tool may work on later versions, it has been primarily tested on PowerShell 5.1*
+  - *If you encounter issues, please report your PowerShell version*
+- Administrator rights to the target vCenter
+- Network connectivity to vCenter Server on TCP port 443
+- Sufficient storage space in output directory
+
+### PowerShell Configuration
+- Local execution policy must allow running unsigned scripts
+  - Example: `Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser`
+- PowerCLI module
+  - *The script will automatically check and install if missing*
+
+### Access Requirements
+- Administrator credentials for the target vCenter
+- System running the script must have:
+  - Network access to vCenter (TCP/443)
+  - Permission to write to the specified output directory
+  - Internet access (for PowerCLI module installation if needed)
 
 ## Quick Start
 
@@ -10,6 +33,12 @@ A PowerShell-based tool for collecting performance metrics from VMware vCenter e
 ```
 2. Enter your vCenter details and collection preferences
 3. Click Save to begin collection
+
+Alternatively, you can run the collection script directly:
+1. Download `01_Collection.ps1`
+2. Configure variables in the script
+3. Run `.\01_Collection.ps1` from PowerShell
+4. Enter credentials when prompted
 
 ## Input Parameters
 
@@ -42,6 +71,10 @@ The script creates a directory named `VCenter-[vcenter_name]` containing:
    - Network config
    - Resource allocation
    - Power state
+   - Guest OS information
+   - Creation date
+   - Resource pool assignment
+   - Storage utilization
 
 2. `vm_[name]_[histLevel]_[metricLevel].csv`: Performance metrics
    - Timestamps
@@ -64,3 +97,58 @@ Note: Never share the `collection_input.json` file as it contains sensitive info
 - Use domain credentials when possible
 - Ensure sufficient disk space in output directory
 - VMware PowerCLI module will auto-install if needed
+
+## Assessment Questionnaire
+
+To maximize the value of collected metrics, please provide information about your environment:
+
+### Resource Allocation and Overcommitment
+
+1. Do you use physical or logical compute separation for different workload categories?
+2. What levels of separation are in use?
+   - Clusters
+   - Hosts
+   - Resource Pools
+   - vApps
+   - VM Reservations
+3. Current overcommit ratios/policies for:
+   - CPU
+   - Memory
+4. Known performance issues or bottlenecks
+5. Other resource allocation considerations
+
+### Dependencies and Constraints
+
+1. Restrictive OS or application licensing models
+2. Special licensing considerations:
+   - SQL
+   - Oracle
+   - Licensing audits requiring host access
+   - Per-core licensing
+3. Non-virtualizable dependencies:
+   - RDMs
+   - Direct-attached storage
+   - Shared disks (Quorum)
+   - Application clustering (MSCS, RAC)
+
+### Network and Security
+
+1. L3 routing technologies
+2. Remote access solutions:
+   - IPSec site-to-site
+   - SSL VPN
+   - MPLS
+3. Load balancing:
+   - L4/L7 capabilities
+   - SSL offloading
+4. WAN optimization
+5. Firewall implementation
+6. Security measures:
+   - Defense in depth
+   - WAF deployment
+   - IDS/IPS
+   - Antivirus (agent/agentless)
+7. CDN usage
+8. Additional network services/features
+
+Please provide this information along with the collected metrics for comprehensive environment assessment.
