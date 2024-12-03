@@ -8,13 +8,13 @@ To download the required files from the vSphere Metric Collector repository, fol
 
 1. Navigate to the following direct file URLs:
    - [collection_input_gui.ps1](https://raw.githubusercontent.com/acs-git/vSphereMetricCollector/main/collection_input_gui.ps1)
-   - [01_Collection.ps1](https://raw.githubusercontent.com/acs-git/vSphereMetricCollector/main/01_Collection.ps1)
+   - [Collection.ps1](https://raw.githubusercontent.com/acs-git/vSphereMetricCollector/main/Collection.ps1)
 
 2. For each file:
    - Right-click on the link
    - Select "Save link as..." or "Save target as..."
    - Choose a location on your computer to save the file
-   - Keep the original filename (collection_input_gui.ps1 and 01_Collection.ps1)
+   - Keep the original filename (collection_input_gui.ps1 and Collection.ps1)
 
 Alternative Method (Using PowerShell):
 
@@ -27,12 +27,12 @@ cd .\vSphereMetricCollector
 
 # Download the files
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/acs-git/vSphereMetricCollector/main/collection_input_gui.ps1" -OutFile "collection_input_gui.ps1"
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/acs-git/vSphereMetricCollector/main/01_Collection.ps1" -OutFile "01_Collection.ps1"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/acs-git/vSphereMetricCollector/main/Collection.ps1" -OutFile "Collection.ps1"
 ```
 
 ### About the Files
 - `collection_input_gui.ps1`: Provides a graphical user interface for inputting vCenter connection and collection parameters
-- `01_Collection.ps1`: The main script that collects metrics from vSphere based on the parameters provided through the GUI
+- `Collection.ps1`: The main script that collects metrics from vSphere based on the parameters provided through the GUI
 
 ## Prerequisites
 
