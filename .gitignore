@@ -1,4 +1,3 @@
 # Ignore collection input file containing sensitive information
-.gitignore
-README_old.md
 collection_input.json
+README_old.md
