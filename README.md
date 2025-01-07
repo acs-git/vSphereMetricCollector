@@ -47,8 +47,14 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/acs-git/vSphereMetricC
 ### PowerShell Configuration
 - Local execution policy must allow running unsigned scripts
   - Example: `Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser`
+    - *Allows PowerShell to run local scripts that aren't digitally signed. The CurrentUser scope limits this setting to your user account only*
 - PowerCLI module
   - *The script will automatically check and install if missing*
+- Additional PowerCLI configurations required:
+  - `Set-PowerCLIConfiguration -InvalidCertificateAction Ignore -Confirm:$false`
+    - *Allows connection to vCenter servers with self-signed or invalid SSL certificates*
+  - `Set-PowerCLIConfiguration -Scope User -ParticipateInCeip $false`
+    - *Opts out of VMware's Customer Experience Improvement Program (CEIP) data collection*
 
 For detailed information about PowerShell execution policies, including security implications and available options, please refer to the official Microsoft documentation:
 [About Execution Policies](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.4)
