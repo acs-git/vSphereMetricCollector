@@ -1,3 +1,4 @@
 # Ignore collection input file containing sensitive information
 collection_input.json
 README_old.md
+.gitignore
